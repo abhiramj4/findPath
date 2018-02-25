@@ -24,7 +24,8 @@ public class Main {
 				// get the next spot
 				Spot nextSpot = position.getNext().get(0);
 
-				// we have a loop
+				// we have a loop where we could possibly be stuck
+				//forever
 				if (nextSpot.getNext().size() != 0) {
 					if (nextSpot.getNext().get(0).getName() == position.getName()) {
 						position.getNext().remove(0);
@@ -49,14 +50,16 @@ public class Main {
 				// this means that next spot does NOT lead to the target
 				if (!findPath(nextSpot, target)) {
 
+					
 					position.getNext().remove(0);
-
+					
 				} else {
 					// otherwise return true
 					return true;
 				}
 			}
 			// no way was found, return false
+			System.out.println("no way found, going back from " + position.getName());
 			return false;
 		}
 
@@ -70,13 +73,27 @@ public class Main {
 		Spot d = new Spot('D');
 		Spot e = new Spot('E');
 		Spot f = new Spot('F');
+		Spot g = new Spot('G');
 
 		a.setNext(f);
+		
 		f.setNext(a);
 		
-		a.setNext(b); b.setNext(c); b.setNext(d); c.setNext(e);
+		a.setNext(b);
+		
+		b.setNext(a);
+		
+		b.setNext(c);
+		
+		b.setNext(d); 
+		
+		c.setNext(e);
+		
+		a.setNext(g);
+		
+		g.setNext(b);
 		
 
-		System.out.println(findPath(a, e));
+		System.out.println(findPath(a, g));
 	}
 }
